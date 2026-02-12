@@ -3,16 +3,33 @@
 from debate.agents import DebateAgent
 from debate.models import DebateResult
 
+DEFAULT_NUM_ROUNDS = 3
+
 
 class DebateModerator:
-    def __init__(self, agents: list[DebateAgent], judge: DebateAgent, num_rounds: int = 3) -> None:
+    """Orchestrates a multi-agent debate over a configurable number of rounds."""
+
+    def __init__(
+        self,
+        agents: list[DebateAgent],
+        judge: DebateAgent,
+        num_rounds: int = DEFAULT_NUM_ROUNDS,
+    ) -> None:
         self.agents = agents
         self.judge = judge
         self.num_rounds = num_rounds
 
     def run_debate(self, topic: str) -> DebateResult:
+        """Execute a full debate on the given topic.
+
+        Args:
+            topic: The subject to debate.
+
+        Returns:
+            A DebateResult with all rounds, votes, and the winner.
+        """
         result = DebateResult(topic=topic)
-        all_arguments = []
+        all_arguments: list = []
 
         for round_num in range(1, self.num_rounds + 1):
             round_args = []
