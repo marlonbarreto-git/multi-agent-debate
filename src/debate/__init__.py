@@ -1,3 +1,14 @@
 """Multi-Agent Debate System."""
 
-__version__ = "0.1.0"
+__all__ = [
+    "Argument",
+    "DebateAgent",
+    "DebateModerator",
+    "DebateResult",
+    "Role",
+    "Vote",
+]
+
+from .agents import DebateAgent
+from .models import Argument, DebateResult, Role, Vote
+from .moderator import DebateModerator
