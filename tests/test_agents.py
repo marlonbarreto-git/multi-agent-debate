@@ -9,7 +9,8 @@ def test_agent_creation():
 
 
 def test_argue_returns_argument():
-    mock_llm = lambda prompt: "My argument"
+    def mock_llm(prompt):
+        return "My argument"
     agent = DebateAgent(name="Alice", role=Role.PRO, llm_fn=mock_llm)
     result = agent.argue(topic="AI safety", history=[], round_num=1)
     assert isinstance(result, Argument)
@@ -35,14 +36,16 @@ def test_argue_includes_history_in_prompt():
 
 
 def test_argue_correct_round_num():
-    mock_llm = lambda prompt: "Round 3 arg"
+    def mock_llm(prompt):
+        return "Round 3 arg"
     agent = DebateAgent(name="Alice", role=Role.PRO, llm_fn=mock_llm)
     result = agent.argue(topic="AI safety", history=[], round_num=3)
     assert result.round_num == 3
 
 
 def test_vote_returns_vote():
-    mock_llm = lambda prompt: "Alice\nBetter points"
+    def mock_llm(prompt):
+        return "Alice\nBetter points"
     agent = DebateAgent(name="Judge1", role=Role.JUDGE, llm_fn=mock_llm)
     vote = agent.vote(topic="AI safety", history=[])
     assert vote.voter == "Judge1"
@@ -51,7 +54,8 @@ def test_vote_returns_vote():
 
 
 def test_vote_no_reason():
-    mock_llm = lambda prompt: "Bob"
+    def mock_llm(prompt):
+        return "Bob"
     agent = DebateAgent(name="Judge1", role=Role.JUDGE, llm_fn=mock_llm)
     vote = agent.vote(topic="AI safety", history=[])
     assert vote.voter == "Judge1"
