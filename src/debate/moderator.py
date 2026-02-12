@@ -1,7 +1,7 @@
 """Debate moderator - orchestrates multi-agent debates."""
 
 from debate.agents import DebateAgent
-from debate.models import DebateResult
+from debate.models import Argument, DebateResult
 
 DEFAULT_NUM_ROUNDS = 3
 
@@ -29,7 +29,7 @@ class DebateModerator:
             A DebateResult with all rounds, votes, and the winner.
         """
         result = DebateResult(topic=topic)
-        all_arguments: list = []
+        all_arguments: list[Argument] = []
 
         for round_num in range(1, self.num_rounds + 1):
             round_args = []
